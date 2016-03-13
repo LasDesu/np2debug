@@ -136,14 +136,14 @@ void atapicmd_a0(IDEDRV drv) {
 			senderror(drv);
 			break;
 		}
-		if (drv->media & IDEIO_MEDIA_CHANGED) {
+		/*if (drv->media & IDEIO_MEDIA_CHANGED) {
 			drv->media &= ~IDEIO_MEDIA_CHANGED;
 			ATAPI_SET_SENSE_KEY(drv, ATAPI_SK_NOT_READY);
 			drv->asc = ATAPI_ASC_NOT_READY_TO_READY_TRANSITION;
 			senderror(drv);
 			break;
-		}
-
+		}*/
+		
 		cmddone(drv);
 		break;
 
@@ -185,6 +185,13 @@ void atapicmd_a0(IDEDRV drv) {
 		lba = (drv->buf[2] << 24) + (drv->buf[3] << 16) + (drv->buf[4] << 8) + drv->buf[5];
 		leng = (drv->buf[7] << 8) + drv->buf[8];
 		atapi_cmd_read(drv, lba, leng);
+		break;
+	
+	case 0x2b:		// seek(10)
+		TRACEOUT(("atapicmd: seek(10)"));
+		lba = (drv->buf[2] << 24) + (drv->buf[3] << 16) + (drv->buf[4] << 8) + drv->buf[5];
+		drv->sector = lba;
+		cmddone(drv);
 		break;
 
 	case 0x55:		// mode select
