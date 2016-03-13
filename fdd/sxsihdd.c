@@ -161,7 +161,7 @@ const SASIHDD	*sasi;
 BRESULT sxsihdd_open(SXSIDEV sxsi, const OEMCHAR *fname) {
 
 	FILEH		fh;
-const OEMCHAR	*ext;
+	const OEMCHAR	*ext;
 	REG8		iftype;
 	long		totals;
 	UINT32		headersize;
@@ -227,7 +227,21 @@ const OEMCHAR	*ext;
 		totals = (SINT32)LOADINTELDWORD(vhd.totals);
 	}
 	else {
-		goto sxsiope_err2;
+		// assumming plain image
+		UINT imgsize = file_getsize(fh);
+		long maxhd = 8;
+		long maxsct = 17;
+		long work1;
+		
+		headersize = 0;
+		size = 512;
+		/*if ( imgsize % size )
+			goto sxsiope_err2;*/
+			
+		totals = imgsize / size;
+		surfaces = maxhd;
+		sectors = maxsct;
+		cylinders = totals / surfaces / sectors;
 	}
 
 	// フォーマット確認～
