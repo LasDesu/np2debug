@@ -277,7 +277,7 @@ const UINT8	*ptr;
 	I286_WORKCLOCK(20);
 }
 
-void i286c(void) {
+UINT8 i286c(void) {
 
 	UINT	opcode;
 
@@ -313,6 +313,7 @@ void i286c(void) {
 			i286op[opcode]();
 		} while(I286_REMCLOCK > 0);
 	}
+	return TRUE;
 }
 
 void i286c_step(void) {

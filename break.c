@@ -22,6 +22,10 @@
 #define	viewstat_all_breakpoint(type, addr)
 #endif
 
+#ifndef CPU_STAT_PM
+#define CPU_STAT_PM 0
+#endif
+
 /// Globals
 /// =======
 UINT8	np2stopemulate = 0;

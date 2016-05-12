@@ -849,7 +849,7 @@ void v30cinit(void) {
 	v30ope0xf7_table[7] = v30_idiv_ea16;
 }
 
-void v30c(void) {
+UINT8 v30c(void) {
 
 	UINT	opcode;
 
@@ -885,6 +885,8 @@ void v30c(void) {
 			v30op[opcode]();
 		} while(I286_REMCLOCK > 0);
 	}
+	
+	return TRUE;
 }
 
 void v30c_step(void) {

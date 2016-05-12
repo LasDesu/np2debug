@@ -269,9 +269,12 @@ opeana_st:
 			}
 opeana_ea:
 			f = (flag >> UAFLAG_SOR) & UAFLAG_SOMASK;
+#ifdef CPU_EBP_INDEX
 			if (((ope & 7) - 1) == CPU_EBP_INDEX)	{
 				mi->seg = CPU_SS;
 			}
+#endif
+#ifdef CPU_REGS_SREG
 			if (f) {
 				mi->seg = CPU_REGS_SREG(f - 1);
 				p[0] = rstr.reg[RSTR_SEG][f - 1][0];
@@ -279,6 +282,7 @@ opeana_ea:
 				p[2] = ':';
 				p += 3;
 			}
+#endif
 			*p++ = '[';
 			if (!(flag & (1 << UAFLAG_ADDR))) {
 				if ((ope & 0xc7) != 0x06) {
@@ -386,6 +390,7 @@ opeana_ea:
 
 		case OP_MEM:
 			f = (flag >> UAFLAG_SOR) & UAFLAG_SOMASK;
+#ifdef CPU_REGS_SREG
 			if (f) {
 				mi->seg = CPU_REGS_SREG(f - 1);
 				p[0] = rstr.reg[RSTR_SEG][f - 1][0];
@@ -393,6 +398,7 @@ opeana_ea:
 				p[2] = ':';
 				p += 3;
 			}
+#endif
 			*p++ = '[';
 			if (!(flag & (1 << UAFLAG_D))) {
 				ptr += 2;
@@ -465,6 +471,7 @@ opeana_str:
 				mnemonic = RSTR_REP + (f - 1);
 			}
 			f = (flag >> UAFLAG_SOR) & UAFLAG_SOMASK;
+#ifdef CPU_REGS_SREG
 			if (f) {
 				mi->seg = CPU_REGS_SREG(f - 1);
 				p[0] = ' ';
@@ -473,6 +480,7 @@ opeana_str:
 				p[3] = ':';
 				p += 4;
 			}
+#endif
 			break;
 
 		case OP1_JCXZ:

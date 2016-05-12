@@ -213,10 +213,10 @@ void i286c_setemm(UINT frame, UINT32 addr);
 
 void CPUCALL i286c_interrupt(REG8 vect);
 
-void i286c(void);
+UINT8 i286c(void);
 void i286c_step(void);
 
-void v30c(void);
+UINT8 v30c(void);
 void v30c_step(void);
 
 #ifdef __cplusplus
