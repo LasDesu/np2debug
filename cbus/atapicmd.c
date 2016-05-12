@@ -1,10 +1,5 @@
 #include	"compiler.h"
 
-#ifdef	TRACEOUT
-#undef	TRACEOUT
-#endif
-#define	TRACEOUT(s)	trace_fmt s
-
 // これ、scsicmdとどう統合するのよ？
 
 #if defined(SUPPORT_IDEIO)
@@ -87,10 +82,10 @@ static void cmddone(IDEDRV drv) {
 }
 
 static void senderror(IDEDRV drv) {
-
-	drv->sc = IDEINTR_IO;
+	drv->sc = IDEINTR_IO /*why*/|IDEINTR_CD;
 	drv->status &= ~(IDESTAT_BSY|IDESTAT_DMRD|IDESTAT_SERV);
 	drv->status |= IDESTAT_CHK;
+	drv->status |= IDESTAT_DRDY;/*why*/
 
 	if (!(drv->ctrl & IDECTRL_NIEN)) {
 		TRACEOUT(("atapicmd: senderror()"));
@@ -136,13 +131,13 @@ void atapicmd_a0(IDEDRV drv) {
 			senderror(drv);
 			break;
 		}
-		/*if (drv->media & IDEIO_MEDIA_CHANGED) {
+		if (drv->media & IDEIO_MEDIA_CHANGED) {
 			drv->media &= ~IDEIO_MEDIA_CHANGED;
 			ATAPI_SET_SENSE_KEY(drv, ATAPI_SK_NOT_READY);
 			drv->asc = ATAPI_ASC_NOT_READY_TO_READY_TRANSITION;
 			senderror(drv);
 			break;
-		}*/
+		}
 		
 		cmddone(drv);
 		break;
