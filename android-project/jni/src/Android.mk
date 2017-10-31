@@ -7,7 +7,7 @@ LOCAL_ARM_MODE := arm
 LOCAL_MODULE := main
 
 SDL_PATH := ../SDL
-NP2_PATH := $(LOCAL_PATH)/../np2
+NP2_PATH := $(LOCAL_PATH)/../../../
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include \
 	$(LOCAL_PATH) \

@@ -3,8 +3,8 @@
  */
 
 #include "compiler.h"
-#include "../np2/sdl2/dosio.h"
-#include "../np2/sdl2/np2.h"
+#include "dosio.h"
+#include "np2.h"
 
 int SDL_main(int argc, char *argv[])
 {

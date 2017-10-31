@@ -1678,7 +1678,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst,
 	unloadextinst();
 
 	TRACETERM();
-	_MEM_USED("report.txt");
+	_MEM_USED(TEXT("report.txt"));
 	dosio_term();
 
 	viewer_term();													// ver0.30
