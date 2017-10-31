@@ -135,3 +135,7 @@ packages/
 */CVS/*
 .cvsignore
 */.cvsignore
+
+Makefile
+Makefile.in
+.dirstamp
